@@ -1,4 +1,4 @@
-# This script changes from RGB color space to YUV and vice-versa
+# This script changes from RGB color space to YUV and vice-versa -- Albert Gubau -- NIA: 229416
 
 def rgb_to_yuv(r, g, b):
     y = 0.299 * r + 0.587 * g + 0.114 * b
@@ -18,22 +18,21 @@ def yuv_to_rgb(y, u, v):
 
 try:
     option = int(input("What do you want to convert? (1 --> RGB to YUV), (2 --> YUV to RGB):  "))
-except:
+
+except ValueError as E:
     print("Incorrect value, exiting program...")
     option = 0
 
 if option == 1:
-    r = float(input("Choose the RED component: "))
-    g = float(input("Choose the GREEN component: "))
-    b = float(input("Choose the BLUE component: "))
-    y, u, v = rgb_to_yuv(r, g, b)
-    print("The YUV result is: ", round(y, 3), ", ", round(u, 3), ", ", round(v, 3))
+    R = float(input("Choose the RED component: "))
+    G = float(input("Choose the GREEN component: "))
+    B = float(input("Choose the BLUE component: "))
+    Y, U, V = rgb_to_yuv(R, G, B)
+    print("The YUV result is: ", round(Y, 3), ", ", round(U, 3), ", ", round(V, 3))
 
 if option == 2:
-    y = float(input("Choose the Y component: "))
-    u = float(input("Choose the U component: "))
-    v = float(input("Choose the V component: "))
-    r, g, b = rgb_to_yuv(y, u, v)
-    print("The RGB result is: ", round(r, 3), ", ", round(g, 3), ", ", round(b, 3))
-
-
+    Y = float(input("Choose the Y component: "))
+    U = float(input("Choose the U component: "))
+    V = float(input("Choose the V component: "))
+    R, G, B = rgb_to_yuv(Y, U, V)
+    print("The RGB result is: ", round(R, 3), ", ", round(G, 3), ", ", round(B, 3))

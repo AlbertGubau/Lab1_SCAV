@@ -1,24 +1,29 @@
-# This script encodes a series of bytes/characters given
+# This script encodes a series of bytes/characters using the Run-Length algorithm -- Albert Gubau -- NIA: 229416
 
-def encode(message):
-    encoded_message = ""
+def encode(input_msg):
+
+    encoded_msg = ""  # Initialize an empty encoded message
+
     i = 0
-    while i <= len(message) - 1:
+    while i <= len(input_msg) - 1:
         count = 1
-        ch = message[i]
+        ch = input_msg[i]    # Get the actual character
         j = i
-        while j < len(message) - 1:
-            if message[j] == message[j + 1]:
-                count = count + 1
-                j = j + 1
+
+        while j < len(input_msg) - 1:
+            if input_msg[j] == input_msg[j + 1]:   # Count the number of character repetitions
+                count += 1
+                j += 1
             else:
                 break
-        encoded_message = encoded_message + str(count) + ch
+
+        encoded_msg += str(count) + ch  # Fill the encoded message with the character and the number of appearances
         i = j + 1
-    return encoded_message
+
+    return encoded_msg
 
 
-# Provide different values for message and test your program
-input_message = str(input("Introduce the message to be encoded as a series of characters (e.g AAABBCC): "))
+# Test of the program
+input_message = str(input("Introduce the message to be encoded as a series of characters (e.g: AAABBCC): "))
 encoded_message = encode(input_message)
-print(encoded_message)
+print("The Run-Length encoded message looks like this: ", encoded_message)

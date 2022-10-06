@@ -1,60 +1,69 @@
-# This script can convert and decode an input using the DCT
+# This script can convert and decode an input using the DCT -- Albert Gubau -- NIA: 229416
 
 import math
 
 pi = 3.142857
-m = 8
-n = 8
 
 
-# Function to find discrete cosine transform and print it
-def dctTransform(matrix):
-    # dct will store the discrete cosine transform
-    dct = []
+# Function to find discrete cosine transform of an input matrix g_x_y
+def dct_transform(g_x_y):
+
+    # g_u_v will store the discrete cosine transform of g_x_y
+    g_u_v = []
+
+    m = len(g_x_y)  # Number of rows in g_x_y
+    n = len(g_x_y[0])  # Number of columns g_x_y
+
+    # Initialize g_u_v as a matrix of None values
     for i in range(m):
-        dct.append([None for _ in range(n)])
+        g_u_v.append([None for _ in range(n)])
 
-    for i in range(m):
-        for j in range(n):
+    for u in range(m):
+        for v in range(n):
 
-            # ci and cj depends on frequency as well as
+            # alpha_u and alpha_v depends on frequency as well as
             # number of row and columns of specified matrix
-            if (i == 0):
-                ci = 1 / (m ** 0.5)
+            if u == 0:
+                alpha_u = 1 / (m ** 0.5)
             else:
-                ci = (2 / m) ** 0.5
+                alpha_u = (2 / m) ** 0.5
 
-            if (j == 0):
-                cj = 1 / (n ** 0.5)
+            if v == 0:
+                alpha_v = 1 / (n ** 0.5)
             else:
-                cj = (2 / n) ** 0.5
+                alpha_v = (2 / n) ** 0.5
 
-            # sum will temporarily store the sum of
-            # cosine signals
-            sum = 0
-            for k in range(m):
-                for l in range(n):
-                    dct1 = matrix[k][l] * math.cos((2 * k + 1) * i * pi / (
-                            2 * m)) * math.cos((2 * l + 1) * j * pi / (2 * n))
-                    sum = sum + dct1
+            # sums will temporarily store the sum of cosines present in the formula
 
-            dct[i][j] = ci * cj * sum
+            sums = 0
+            for x in range(m):
+                for y in range(n):
+                    dct = g_x_y[x][y] * math.cos((2 * x + 1) * u * pi / (
+                          2 * m)) * math.cos((2 * y + 1) * v * pi / (2 * n))
+                    sums = sums + dct
 
-    for i in range(m):
-        for j in range(n):
-            print(dct[i][j], end="\t")
-        print()
+            g_u_v[u][v] = alpha_u * alpha_v * sums   # Store the final result
+
+    return g_u_v
 
 
-# Driver code
-matrix = [[255, 255, 255, 255, 255, 255, 255, 255],
-          [255, 255, 255, 255, 255, 255, 255, 255],
-          [255, 255, 255, 255, 255, 255, 255, 255],
-          [255, 255, 255, 255, 255, 255, 255, 255],
-          [255, 255, 255, 255, 255, 255, 255, 255],
-          [255, 255, 255, 255, 255, 255, 255, 255],
-          [255, 255, 255, 255, 255, 255, 255, 255],
-          [255, 255, 255, 255, 255, 255, 255, 255]]
+# Test part (simulation of a white 8x8 picture)
 
-dctTransform(matrix)
+gxy = [[255, 255, 255, 255, 255, 255, 255, 255],
+       [255, 255, 255, 255, 255, 255, 255, 255],
+       [255, 255, 255, 255, 255, 255, 255, 255],
+       [255, 255, 255, 255, 255, 255, 255, 255],
+       [255, 255, 255, 255, 255, 255, 255, 255],
+       [255, 255, 255, 255, 255, 255, 255, 255],
+       [255, 255, 255, 255, 255, 255, 255, 255],
+       [255, 255, 255, 255, 255, 255, 255, 255]]
 
+guv = dct_transform(gxy)
+
+
+# Print the result of the DCT
+
+for i in range(len(guv)):
+    for j in range(len(guv[0])):
+        print(guv[i][j], end="\t")
+    print()
