@@ -1,5 +1,5 @@
 On one hand, we can see that the image has been converted to black and white 
 by applying the command line in the image, we set the hue and s variables to 0, 
 that gives us the result that we want. On the other hand, we can see that the 
-image has been compressed too. This may come from the fact that we are downgrading 
+image has been compressed too, this may come from the fact that we are downgrading 
 the amount of information that we have in the image, in this case, the color components.
